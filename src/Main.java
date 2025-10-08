@@ -1,12 +1,15 @@
 
 
 import entidades.Movimentacao;
-
+import entidades.Produtos;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        Movimentacao m = new Movimentacao();
+        Produtos p = new Produtos();
 
         int opcao = -1;
 
