@@ -6,6 +6,7 @@ public class Produtos {
     private String nome;
     private String descricao;
     private int estoque;
+    private char sr_deleted;
 
     public Produtos() {
 
@@ -16,6 +17,7 @@ public class Produtos {
         this.nome = nome;
         this.descricao = descricao;
         this.estoque = estoque;
+        this.sr_deleted = 'F';
     }
 
     public int getIdProduto() {
@@ -50,8 +52,22 @@ public class Produtos {
         this.estoque = estoque;
     }
 
+    public char getSr_deleted() {
+        return sr_deleted;
+    }
+
+    public void setSr_deleted(char sr_deleted) {
+        this.sr_deleted = sr_deleted;
+    }
+
     @Override
     public String toString() {
-        return "Produtos{" + "idProduto=" + idProduto + ", nome='" + nome + '\'' + ", descricao='" + descricao + '\'' + ", estoque=" + estoque + '}';
+        return "Produtos{" +
+                "idProduto=" + idProduto +
+                ", nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", estoque=" + estoque +
+                ", sr_deleted=" + sr_deleted +
+                '}';
     }
 }

@@ -9,18 +9,20 @@ public class Movimentacao {
     private String tipoMovimentacao;
     private int quantidade;
     private LocalDate dataMov;
+    private char sr_deleted;
 
     public Movimentacao() {
 
     }
 
-    public Movimentacao(int idMovimentacao, Produtos produtos, String movSaida, String movEntrada, int quantidade, LocalDate dataMov) {
+    public Movimentacao(int idMovimentacao, Produtos produto, String tipoMovimentacao, int quantidade, LocalDate dataMov) {
 
         this.idMovimentacao = idMovimentacao;
         this.produtos = produtos;
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
         this.dataMov = dataMov;
+        this.sr_deleted = 'F';
 
     }
 
@@ -64,8 +66,23 @@ public class Movimentacao {
         this.dataMov = dataMov;
     }
 
+    public char getSr_deleted() {
+        return sr_deleted;
+    }
+
+    public void setSr_deleted(char sr_deleted) {
+        this.sr_deleted = sr_deleted;
+    }
+
     @Override
     public String toString() {
-        return "Movimentacao{" + "idMovimentacao=" + idMovimentacao + ", produtos=" + produtos + ", tipoMovimentacao='" + tipoMovimentacao + '\'' + ", quantidade=" + quantidade + ", dataMov=" + dataMov + '}';
+        return "Movimentacao{" +
+                "idMovimentacao=" + idMovimentacao +
+                ", produtos=" + produtos +
+                ", tipoMovimentacao='" + tipoMovimentacao + '\'' +
+                ", quantidade=" + quantidade +
+                ", dataMov=" + dataMov +
+                ", sr_deleted=" + sr_deleted +
+                '}';
     }
 }
