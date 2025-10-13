@@ -68,9 +68,7 @@ public class ProdutosDAO {
             }
 
         } catch (SQLException e) {
-            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro para buscar o produto pelo id");
-            System.out.println("erro para buscar o produto pelo id, tente novamente");
-
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro para buscar o produto pelo id", e);
         }
         return null;
     }

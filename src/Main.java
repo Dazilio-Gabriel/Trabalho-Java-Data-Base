@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-import dao.movimentacaoDAO;
 import dao.ProdutosDAO;
 import entidades.Produtos;
 
