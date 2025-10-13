@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
+import dao.MovimentacaoDAO;
 import dao.ProdutosDAO;
+import entidades.Movimentacao;
 import entidades.Produtos;
 
 public class Main {
@@ -30,6 +32,8 @@ public class Main {
         // criar o objeto das classes
         ProdutosDAO produtosDAO = new ProdutosDAO();
         Produtos p = new Produtos();
+        MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
+        Movimentacao m = new Movimentacao();
 
         // loop
         int opcao = -1;

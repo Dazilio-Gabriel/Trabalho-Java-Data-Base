@@ -40,7 +40,7 @@ public class MovimentacaoDAO {
             System.out.println("Movimentação do produto '" + movimentacao.getProdutos().getNome() + "movimentacao inserida com sucesso");
 
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "erro para inserir a movimentacao", e);
             System.err.println("erro para inserir a movimentacao, tente novamente mais tarde");
         }
