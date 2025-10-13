@@ -2,6 +2,7 @@ package dao;
 
 import entidades.Produtos;
 import utils.conexaoDB;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,8 +21,8 @@ public class ProdutosDAO {
                 System.err.println("falha na conexao.");
                 return;
             }
-            PreparedStatement stmt = conn.prepareStatement(sql);
 
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, produtos.getNome());
             stmt.setString(2, produtos.getDescricao());
             stmt.setInt(3, produtos.getEstoque());
