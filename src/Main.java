@@ -41,8 +41,8 @@ public class Main {
 
             System.out.println("\n--- MENU PRINCIPAL ---");
             System.out.println("1 - Relatórios");
-            System.out.println("2 - Inserir Registro");
-            System.out.println("3 - Remover Registro");
+            System.out.println("2 - Inserir um novo produto");
+            System.out.println("3 - Inserir uma movimentacao");
             System.out.println("4 - Atualizar Registro");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
@@ -69,7 +69,8 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.println("voce escolheu: remover registro");
+                    System.out.println("voce escolheu: Inserir uma movimentacao");
+                    
 
                     break;
 
