@@ -75,7 +75,8 @@ public class ProdutosDAO {
         return null;
     }
 
-    public List<Produtos> listarPTodos() {
+    public List<Produtos> listarTodos() {
+        List<Produtos> produtos = new ArrayList<>();
 
         String sql = "SELECT * FROM produtos where sr_deleted = 'F' ";
 
@@ -89,15 +90,18 @@ public class ProdutosDAO {
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
-
-            List<String> produtos = new ArrayList<>();
-
             while (rs.next()) {
 
+                int id_Produto = rs.getInt("id_produto");
                 String nome = rs.getString("nome");
                 String descricao = rs.getString("descricao");
                 int estoque = rs.getInt("quantidade_estoque");
                 char srDeleted = rs.getString("sr_deleted").charAt(0);
+
+                Produtos itens = new Produtos(id_Produto, nome, descricao, estoque);
+                itens.setSr_deleted(srDeleted);
+
+                produtos.add(itens);
 
             }
 
@@ -108,7 +112,7 @@ public class ProdutosDAO {
         }
 
 
-        return List.of();
+        return produtos;
     }
 
 
