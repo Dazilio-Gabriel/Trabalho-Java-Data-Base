@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -40,7 +42,7 @@ public class ProdutosDAO {
 
     public Produtos buscarPorId(int id) {
 
-        String sql = "SELECT * FROM PRODUTOS WHERE id_produto = ?";
+        String sql = "SELECT * FROM produtos WHERE id_produto = ?";
 
         try (Connection conn = conexaoDB.getConexao()) {
 
@@ -72,4 +74,42 @@ public class ProdutosDAO {
         }
         return null;
     }
+
+    public List<Produtos> listarPTodos() {
+
+        String sql = "SELECT * FROM produtos where sr_deleted = 'F' ";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+
+            if (conn == null) {
+                System.out.println("falha na conexao");
+                return null;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+
+            List<String> produtos = new ArrayList<>();
+
+            while (rs.next()) {
+
+                String nome = rs.getString("nome");
+                String descricao = rs.getString("descricao");
+                int estoque = rs.getInt("quantidade_estoque");
+                char srDeleted = rs.getString("sr_deleted").charAt(0);
+
+            }
+
+
+        } catch (SQLException e) {
+
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro para listar todos", e);
+        }
+
+
+        return List.of();
+    }
+
+
 }
