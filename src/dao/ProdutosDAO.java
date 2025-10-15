@@ -1,5 +1,6 @@
 package dao;
 
+import com.mysql.cj.log.Log;
 import entidades.Produtos;
 import utils.conexaoDB;
 
@@ -37,6 +38,33 @@ public class ProdutosDAO {
 
             Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro para inserir um produto", e);
             System.err.println("erro para inserir o produto, tente novamente.");
+        }
+    }
+
+    public void atualizar(Produtos produtos) {
+
+        String sql = "UPDATE produtos SET nome = ?, descricao = ?, quantidade_estoque = ? where id_produto = ?";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+
+            if (conn == null) {
+                System.out.println("falha na conexao");
+                return;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, produtos.getNome());
+            stmt.setString(2, produtos.getDescricao());
+            stmt.setInt(3, produtos.getEstoque());
+            stmt.setInt(4, produtos.getIdProduto());
+
+            stmt.executeUpdate();
+
+
+        } catch (Exception e) {
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro ao atualizar o produto");
+            System.err.println("erro para atualziar o produto, tente novamente.");
+
         }
     }
 
@@ -114,6 +142,4 @@ public class ProdutosDAO {
 
         return produtos;
     }
-
-
 }
