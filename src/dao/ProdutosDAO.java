@@ -1,6 +1,5 @@
 package dao;
 
-import com.mysql.cj.log.Log;
 import entidades.Produtos;
 import utils.conexaoDB;
 
@@ -48,7 +47,7 @@ public class ProdutosDAO {
         try (Connection conn = conexaoDB.getConexao()) {
 
             if (conn == null) {
-                System.out.println("falha na conexao");
+                System.err.println("falha na conexao");
                 return;
             }
 
@@ -61,10 +60,32 @@ public class ProdutosDAO {
             stmt.executeUpdate();
 
 
-        } catch (Exception e) {
-            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro ao atualizar o produto");
+        } catch (SQLException e) {
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro ao atualizar o produto", e);
             System.err.println("erro para atualziar o produto, tente novamente.");
 
+        }
+    }
+
+    public void deletar(int id) {
+
+        String sql = "UPDATE produtos SET sr_deleted = 'T' where id_produto = ? ";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+
+            if (conn == null) {
+                System.err.println("falha na conexao");
+                return;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "falha para deletar um produto", e);
         }
     }
 
@@ -111,7 +132,7 @@ public class ProdutosDAO {
         try (Connection conn = conexaoDB.getConexao()) {
 
             if (conn == null) {
-                System.out.println("falha na conexao");
+                System.err.println("falha na conexao");
                 return null;
             }
 
