@@ -89,7 +89,6 @@ public class MovimentacaoDAO {
 
             stmt.executeUpdate();
 
-
         } catch (SQLException e) {
             Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "falha para deletar a movimentacao", e);
         }

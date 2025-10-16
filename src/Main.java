@@ -81,9 +81,11 @@ public class Main {
                     break;
 
                 case 3:
-                    List<Produtos> listaDosProdutos = produtosDAO.listarTodos();
+                    System.out.println("\n--- INSERIR NOVA MOVIMENTACAO ---");
+
+                    List<Produtos> listaDosProdutosMov = produtosDAO.listarTodos();
                     System.out.println("\n--- PRODUTOS CADASTRADOS ---");
-                    for (Produtos produto : listaDosProdutos) {
+                    for (Produtos produto : listaDosProdutosMov) {
                         System.out.println("ID: " + produto.getIdProduto() + " | Nome: " + produto.getNome());
                     }
                     System.out.println("---------------------------------------");
@@ -96,10 +98,10 @@ public class Main {
                     System.out.println("digite a quantidade atual");
                     int quantidadeMov = scanner.nextInt();
 
-                    Produtos produtoSelecionado = produtosDAO.buscarPorId(idProdMov);
+                    Produtos produtoSelecionados = produtosDAO.buscarPorId(idProdMov);
                     LocalDate localDate = LocalDate.now();
 
-                    Movimentacao novaMovimentacao = new Movimentacao(0, produtoSelecionado, tipoMov, quantidadeMov, localDate);
+                    Movimentacao novaMovimentacao = new Movimentacao(0, produtoSelecionados, tipoMov, quantidadeMov, localDate);
                     movimentacaoDAO.inserir(novaMovimentacao);
 
                     break;
@@ -182,6 +184,7 @@ public class Main {
 
                         case 0:
                             System.out.println("\nvoce esta voltando para o menu inicial");
+
                             break;
 
                         default:
@@ -193,8 +196,47 @@ public class Main {
                     break;
 
                 case 5:
-                    System.out.println("Você escolheu: Excluir um Produto (Não implementado)");
+                    System.out.println("\n--- EXCLUIR REGISTRO ---");
+                    System.out.println("1 - Excluir Produto");
+                    System.out.println("2 - Excluir Movimentação");
+                    System.out.println("0 - Voltar");
+                    System.out.print("Escolha uma opção: ");
+                    int subOpcaoExcluir = scanner.nextInt();
+                    scanner.nextLine();
 
+                    switch (subOpcaoExcluir) {
+                        case 1:
+
+
+                            break;
+
+                        case 2:
+
+                            System.out.println("\n--- EXCLUIR MOVIMENTAÇÃO ---");
+                            List<Movimentacao> listaDeMovimentacoes = movimentacaoDAO.listarTodos();
+                            System.out.println("\n--- MOVIMENTAÇÕES CADASTRADAS ---");
+                            for (Movimentacao mov : listaDeMovimentacoes) {
+                                System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: " + mov.getProdutos().getNome());
+                            }
+                            System.out.println("-------------------------------------------------");
+
+                            System.out.println("digite o id da movimentacao que voce ira excluir");
+                            int idMovDel = scanner.nextInt();
+
+                            movimentacaoDAO.deletar(idMovDel);
+
+                            break;
+
+                        case 0:
+                            System.out.println("\nvoce esta voltando para o menu inicial");
+
+                            break;
+
+                        default:
+                            System.out.println("Opção do sub-menu inválida.");
+
+                            break;
+                    }
                     break;
 
                 case 0:
