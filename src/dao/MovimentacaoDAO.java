@@ -1,11 +1,15 @@
 package dao;
 
+import entidades.Produtos;
 import entidades.Movimentacao;
 import utils.conexaoDB;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.sql.Connection;
@@ -45,6 +49,49 @@ public class MovimentacaoDAO {
             System.err.println("erro para inserir a movimentacao, tente novamente mais tarde");
         }
     }
+
+    public List<Movimentacao> listarTodos() {
+        List<Movimentacao> movimentacaos = new ArrayList<>();
+
+        String sql = "SELECT * FROM movimetacao where sr_deleted = 'F'";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+
+            if (conn == null) {
+                System.out.println("falha na conexao");
+                return null;
+            }
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                int idProduto = rs.getInt("id_produto");
+                Produtos produtoDaMovimentacao = this.produtosDAO.buscarPorId(idProduto);
+
+                if (produtoDaMovimentacao != null) {
+
+                    int idMov = rs.getInt("id_movimentacao");
+                    String tipoMov = rs.getString("tipo_movimentacao");
+                    int quantidade = rs.getInt("quantidade");
+                    java.sql.Date dataDoBanco = rs.getDate("data_movimentacao");
+                    LocalDate dataParaObjeto = dataDoBanco.toLocalDate();
+                    char srDeleted = rs.getString("sr_deleted").charAt(0);
+
+                    Movimentacao mov = new Movimentacao(idMov, produtoDaMovimentacao, tipoMov, quantidade, dataParaObjeto);
+                    mov.setSr_deleted(srDeleted);
+                    movimentacaos.add(mov);
+                }
+            }
+
+
+        } catch (SQLException e) {
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "erro para puxar todas as movimentacoes");
+        }
+
+        return movimentacaos;
+    }
+
 
     public int contarRegistros() {
         String sql = "SELECT COUNT(*) FROM movimentacao";

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 import dao.MovimentacaoDAO;
@@ -30,10 +31,10 @@ public class Main {
         System.out.println("##################################################\n");
 
         // criar o objeto das classes
-        ProdutosDAO produtosDAO = new ProdutosDAO();
-        Produtos p = new Produtos();
-        MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
-        Movimentacao m = new Movimentacao();
+        ProdutosDAO prodDAO = new ProdutosDAO();
+        MovimentacaoDAO movDAO = new MovimentacaoDAO();
+        Produtos prod = new Produtos();
+        Movimentacao mov = new Movimentacao();
 
         // loop
         int opcao = -1;
@@ -43,11 +44,16 @@ public class Main {
             System.out.println("1 - Relatórios");
             System.out.println("2 - Inserir um novo produto");
             System.out.println("3 - Inserir uma movimentacao");
-            System.out.println("4 - Atualizar Registro");
+            System.out.println("4 - Atualizar um Produto");
+            System.out.println("5 - Excluir um Produto");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
             switch (opcao) {
+                case 0:
+                    System.out.println("saindo do sistema");
+                    break;
+
                 case 1:
                     System.out.println("voce escolheu: relatorios");
 
@@ -64,30 +70,78 @@ public class Main {
                     int estoque = scanner.nextInt();
 
                     Produtos novoProduto = new Produtos(0, nome, descricao, estoque);
-                    produtosDAO.inserir(novoProduto);
+                    prodDAO.inserir(novoProduto);
 
                     break;
 
                 case 3:
                     System.out.println("voce escolheu: Inserir uma movimentacao");
-                    
 
                     break;
 
                 case 4:
-                    System.out.println("voce escolheu: atualizar registro");
-                    break;
 
-                case 0:
-                    System.out.println("saindo do sistema");
-                    break;
+                    System.out.println("voce escolheu: atualizar um Produto");
+                    System.out.println("\n--- ATUALIZAR REGISTRO ---");
+                    System.out.println("Qual entidade você deseja atualizar?");
+                    System.out.println("1 - Produto");
+                    System.out.println("2 - Movimentação");
+                    System.out.println("0 - Voltar ao Menu Principal");
+                    System.out.print("Escolha uma opção: ");
+
+                    int subOpcao = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (subOpcao) {
+
+                        case 0:
+                            System.out.println("Você esta voltando ao menu inicial");
+                            break;
+
+                        case 1:
+                            List<Produtos> listaDosProdutos = prodDAO.listarTodos();
+                            System.out.println("\n--- PRODUTOS CADASTRADOS ---");
+
+                            for (Produtos produtos : listaDosProdutos) {
+                                System.out.println("ID: " + produtos.getIdProduto() + " | Nome: " + produtos.getNome() + " | Estoque: " + produtos.getEstoque());
+                            }
+                            System.out.println("---------------------------------------");
+
+                            System.out.println("Digite o id do produto que voce quer alterar");
+                            int novoId = scanner.nextInt();
+                            scanner.nextLine();
+
+                            System.out.println("Digite o novo nome do produtos");
+                            String novoNome = scanner.nextLine();
+                            System.out.println("Digite a nova descrição, caso tenha");
+                            String novaDescricao = scanner.nextLine();
+                            System.out.println("Digite a quantidade atual do estoque");
+                            int novoEstoque = scanner.nextInt();
+
+                            Produtos produtosAtualizados = new Produtos(novoId, novoNome, novaDescricao, novoEstoque);
+
+                            prodDAO.atualizar(produtosAtualizados);
+
+                            break;
+
+                        case 2:
+                            System.out.println("\n--- PRODUTOS CADASTRADOS ---");
+
+                            for (Movimentacao movimentacao : listaDosProdutos){
+
+                            }
+
+                            break;
+
+                        default:
+                            System.out.println("opção inválida, por favor, escolha uma opção do menu.");
+                            break;
+                    }
 
                 default:
                     System.out.println("opção inválida, por favor, escolha uma opção do menu.");
                     break;
             }
         }
-
-        scanner.close();
     }
 }
