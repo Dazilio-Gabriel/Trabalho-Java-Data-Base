@@ -98,7 +98,7 @@ public class MovimentacaoDAO {
     public List<Movimentacao> listarTodos() {
         List<Movimentacao> movimentacaos = new ArrayList<>();
 
-        String sql = "SELECT * FROM movimetacao where sr_deleted = 'F'";
+        String sql = "SELECT * FROM movimentacao where sr_deleted = 'F'";
 
         try (Connection conn = conexaoDB.getConexao()) {
 
@@ -137,7 +137,6 @@ public class MovimentacaoDAO {
         return movimentacaos;
     }
 
-
     public int contarRegistros() {
         String sql = "SELECT COUNT(*) FROM movimentacao";
 
@@ -160,4 +159,66 @@ public class MovimentacaoDAO {
         }
         return 0;
     }
+
+    public int contarMovPorId(int idProduto) {
+        String sql = "SELECT COUNT(*) from movimentacao where id_produto = ? ";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+
+            if (conn == null) {
+                System.out.println("falha na conexao");
+                return 0;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idProduto);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "Falha para verificar produtos deletados", e);
+        }
+        return 0;
+    }
+
+    public Movimentacao buscarPorId(int id) {
+        String sql = "SELECT * FROM movimentacao WHERE id_movimentacao = ?";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+            if (conn == null) {
+                System.err.println("Falha na conexao.");
+                return null;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int idProduto = rs.getInt("id_produto");
+                Produtos produtoDaMovimentacao = this.produtosDAO.buscarPorId(idProduto);
+
+                if (produtoDaMovimentacao != null) {
+                    String tipoMov = rs.getString("tipo_movimentacao");
+                    int quantidade = rs.getInt("quantidade");
+                    LocalDate dataParaObjeto = rs.getDate("data_movimentacao").toLocalDate();
+                    char srDeleted = rs.getString("sr_deleted").charAt(0);
+
+                    Movimentacao movimentacaoEncontrada = new Movimentacao(id, produtoDaMovimentacao, tipoMov, quantidade, dataParaObjeto);
+                    movimentacaoEncontrada.setSr_deleted(srDeleted);
+
+                    return movimentacaoEncontrada;
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "Falha para buscar a movimentacao com ID: " + id, e);
+        }
+
+        return null;
+    }
+
 }
