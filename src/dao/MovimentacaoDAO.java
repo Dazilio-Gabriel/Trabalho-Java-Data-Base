@@ -50,6 +50,31 @@ public class MovimentacaoDAO {
         }
     }
 
+
+    public void atualizar(Movimentacao movimentacao) {
+        String sql = "UPDATE movimentacao SET id_produto = ?, tipo_movimentacao = ?, quantidade = ? where id_movimentacao = ?";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+
+            if (conn == null) {
+                System.out.println("falha na conexao");
+                return;
+            }
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, movimentacao.getProdutos().getIdProduto());
+            stmt.setString(2, movimentacao.getTipoMovimentacao());
+            stmt.setInt(3, movimentacao.getQuantidade());
+            stmt.setInt(4, movimentacao.getIdMovimentacao());
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "Falha para atualizar movimentacao", e);
+        }
+    }
+
+
     public List<Movimentacao> listarTodos() {
         List<Movimentacao> movimentacaos = new ArrayList<>();
 

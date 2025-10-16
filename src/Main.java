@@ -108,7 +108,7 @@ public class Main {
                             System.out.println("---------------------------------------");
 
                             System.out.println("Digite o id do produto que voce quer alterar");
-                            int novoId = scanner.nextInt();
+                            int novoIdP = scanner.nextInt();
                             scanner.nextLine();
 
                             System.out.println("Digite o novo nome do produtos");
@@ -118,16 +118,31 @@ public class Main {
                             System.out.println("Digite a quantidade atual do estoque");
                             int novoEstoque = scanner.nextInt();
 
-                            Produtos produtosAtualizados = new Produtos(novoId, novoNome, novaDescricao, novoEstoque);
+                            Produtos produtosAtualizados = new Produtos(novoIdP, novoNome, novaDescricao, novoEstoque);
 
                             prodDAO.atualizar(produtosAtualizados);
 
                             break;
 
                         case 2:
+                            List<Movimentacao> listaDasMovimentacoes = movDAO.listarTodos();
                             System.out.println("\n--- PRODUTOS CADASTRADOS ---");
 
-                            for (Movimentacao movimentacao : listaDosProdutos){
+                            for (Movimentacao movimentacao : listaDasMovimentacoes) {
+                                System.out.println("ID: " + movimentacao.getIdMovimentacao() + " | Tipo da movimentacao: " + movimentacao.getTipoMovimentacao() + " | Estoque: " + movimentacao.getQuantidade());
+
+                                System.out.println("Digite o id do produto que voce quer alterar");
+                                int novoIdM = scanner.nextInt();
+                                scanner.nextLine();
+
+                                System.out.println("Digite o tipo da movimentacao");
+                                char tipoNovo = scanner.nextInt();
+                                System.out.println("Digite o estoque atual");
+                                int estoqueNovo = scanner.nextInt();
+
+
+                                Movimentacao movimentacaoAtualizada = new Movimentacao(novoIdM, tipoNovo, estoqueNovo);
+
 
                             }
 
