@@ -94,6 +94,7 @@ public class MovimentacaoDAO {
             Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "falha para deletar a movimentacao", e);
         }
 
+    }
 
     public List<Movimentacao> listarTodos() {
         List<Movimentacao> movimentacaos = new ArrayList<>();
