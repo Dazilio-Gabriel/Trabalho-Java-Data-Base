@@ -185,7 +185,7 @@ public class Main {
 
                 default:
                     System.out.println("Opção inválida! Por favor, escolha uma opção do menu.");
-                    
+
                     break;
             }
         }

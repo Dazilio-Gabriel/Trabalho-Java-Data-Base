@@ -153,14 +153,10 @@ public class ProdutosDAO {
                 produtos.add(itens);
 
             }
-
-
+            
         } catch (SQLException e) {
-
             Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro para listar todos", e);
         }
-
-
         return produtos;
     }
 }
