@@ -74,6 +74,31 @@ public class MovimentacaoDAO {
         }
     }
 
+   /* public void deletar(int id) {
+
+        String sql = "UPDATE produtos SET sr_deleted = 'T' where id_produto = ? ";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+
+            if (conn == null) {
+                System.err.println("falha na conexao");
+                return;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "falha para deletar um produto", e);
+        }
+    }
+
+    */
+
+
 
     public List<Movimentacao> listarTodos() {
         List<Movimentacao> movimentacaos = new ArrayList<>();
