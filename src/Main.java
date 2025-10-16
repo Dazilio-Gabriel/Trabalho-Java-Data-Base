@@ -45,7 +45,7 @@ public class Main {
             System.out.println("2 - Inserir um novo produto");
             System.out.println("3 - Inserir uma movimentacao");
             System.out.println("4 - Atualizar um Registro");
-            System.out.println("5 - Excluir um Produto");
+            System.out.println("5 - Excluir um Produto ou uma Movimentacao");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -81,7 +81,26 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.println("Você escolheu: Inserir uma movimentação (Não implementado)");
+                    List<Produtos> listaDosProdutos = produtosDAO.listarTodos();
+                    System.out.println("\n--- PRODUTOS CADASTRADOS ---");
+                    for (Produtos produto : listaDosProdutos) {
+                        System.out.println("ID: " + produto.getIdProduto() + " | Nome: " + produto.getNome());
+                    }
+                    System.out.println("---------------------------------------");
+
+                    System.out.println("digite o id do produto que voce ira movimentar");
+                    int idProdMov = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("digite o tipo da movimentacao");
+                    String tipoMov = scanner.nextLine();
+                    System.out.println("digite a quantidade atual");
+                    int quantidadeMov = scanner.nextInt();
+
+                    Produtos produtoSelecionado = produtosDAO.buscarPorId(idProdMov);
+                    LocalDate localDate = LocalDate.now();
+
+                    Movimentacao novaMovimentacao = new Movimentacao(0, produtoSelecionado, tipoMov, quantidadeMov, localDate);
+                    movimentacaoDAO.inserir(novaMovimentacao);
 
                     break;
 
@@ -135,7 +154,7 @@ public class Main {
 
                             List<Produtos> produtosDisponiveis = produtosDAO.listarTodos();
                             System.out.println("\n--- PRODUTOS DISPONÍVEIS ---");
-                            // CORREÇÃO: Usando a variável correta ('prodDaLista')
+
                             for (Produtos prodDaLista : produtosDisponiveis) {
                                 System.out.println("ID: " + prodDaLista.getIdProduto() + " | Nome: " + prodDaLista.getNome());
                             }
@@ -162,7 +181,7 @@ public class Main {
                             break;
 
                         case 0:
-
+                            System.out.println("\nvoce esta voltando para o menu inicial");
                             break;
 
                         default:
