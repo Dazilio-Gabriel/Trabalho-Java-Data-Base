@@ -124,7 +124,7 @@ public class ProdutosDAO {
         return null;
     }
 
-    public List<Produtos> listarTodoslistarTodos() {
+    public List<Produtos> listarTodos() {
         List<Produtos> produtos = new ArrayList<>();
 
         String sql = "SELECT * FROM produtos where sr_deleted = 'F' ";

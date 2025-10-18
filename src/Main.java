@@ -1,3 +1,4 @@
+import java.text.BreakIterator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -61,7 +62,27 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Você escolheu: Relatórios (Não implementado)");
+                    System.out.println("\n--- RELATORIOS ---");
+                    System.out.println("1 - Listar Todas as Movimentações (com Nome do Produto)");
+                    System.out.println("2 - Total de Itens Movimentados por Tipo");
+                    System.out.println("0 - Voltar");
+                    System.out.print("Escolha uma opção: ");
+                    int subOpcaoRelatorios = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (subOpcaoRelatorios) {
+
+                        case 1:
+
+                            break;
+
+                        case 2:
+
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     break;
 
