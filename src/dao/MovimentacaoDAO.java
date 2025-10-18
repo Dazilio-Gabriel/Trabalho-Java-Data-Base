@@ -3,6 +3,7 @@ package dao;
 import entidades.Produtos;
 import entidades.Movimentacao;
 import utils.conexaoDB;
+import entidades.RelatorioAgrupado;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -220,5 +221,37 @@ public class MovimentacaoDAO {
 
         return null;
     }
+
+    public List<RelatorioAgrupado> gerarRelatorioSomaPorTipo() {
+        List<RelatorioAgrupado> relatoriosAgrupados = new ArrayList<>();
+
+        String sql = "SELECT tipo_movimentacao, SUM(quantidade) AS total FROM movimentacao GROUP BY tipo_movimentacao";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+            if (conn == null) {
+                System.out.println("falha na conexao");
+                return null;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                String tipo = rs.getString("tipo_movimentacao");
+                int total = rs.getInt("total");
+
+                RelatorioAgrupado itemRelatorios = new RelatorioAgrupado(tipo, total);
+                gerarRelatorioSomaPorTipo().add(itemRelatorios);
+            }
+
+
+        } catch (Exception e) {
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "falha para gerar o relaotiro agrupado", e);
+        }
+
+        return relatoriosAgrupados;
+    }
+
 
 }
