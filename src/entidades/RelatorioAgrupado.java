@@ -6,7 +6,10 @@ public class RelatorioAgrupado {
     private String tipoMovimentacao;
     private int totalQuantidade;
 
-    public RelatorioAgrupado() {
+    public RelatorioAgrupado(String tipoMovimentacao, int totalQuantidade) {
+
+        this.tipoMovimentacao = tipoMovimentacao;
+        this.totalQuantidade = totalQuantidade;
 
     }
 
