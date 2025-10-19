@@ -7,6 +7,7 @@ import dao.MovimentacaoDAO;
 import dao.ProdutosDAO;
 import entidades.Movimentacao;
 import entidades.Produtos;
+import entidades.RelatorioAgrupado;
 
 import java.time.LocalDate;
 
@@ -17,6 +18,7 @@ public class Main {
 
         ProdutosDAO produtosDAO = new ProdutosDAO();
         MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
+        Movimentacao movimentacao = new Movimentacao();
 
         /*
         // --- SPLASH SCREEN (agora funcional) ---
@@ -73,14 +75,39 @@ public class Main {
                     switch (subOpcaoRelatorios) {
 
                         case 1:
+                            System.out.println("\n--- TODAS AS MOVIMENTACOES REGISTRADAS ---");
+                            List<Movimentacao> relatorioAgrupados = movimentacaoDAO.listarTodos();
+
+                            if (relatorioAgrupados == null || relatorioAgrupados.isEmpty()) {
+                                System.out.println("Nenhuma movimentação encontrada.");
+                            } else {
+                                for (Movimentacao mov : relatorioAgrupados) {
+                                    System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: [" + mov.getProdutos().getIdProduto() + "] " + mov.getProdutos().getNome() + " | Tipo: " + mov.getTipoMovimentacao() + " | Qtd: " + mov.getQuantidade() + " | Data: " + mov.getDataMov());
+                                }
+                            }
+
+                        case 2:
+                            System.out.println("\n--- RELATÓRIO: TOTAL POR TIPO ---");
+                            List<RelatorioAgrupado> resultadoAgrupado = movimentacaoDAO.gerarRelatorioSomaPorTipo();
+
+                            if (resultadoAgrupado == null || resultadoAgrupado.isEmpty()) {
+                                System.out.println("Nenhum dado encontrado para agrupar.");
+                            } else {
+                                for (RelatorioAgrupado item : resultadoAgrupado) {
+                                    System.out.println("Tipo: " + item.getTipoMovimentacao() + " | Total de Itens: " + item.getTotalQuantidade());
+                                }
+                            }
 
                             break;
 
-                        case 2:
+                        case 0:
+                            System.out.println("Voce esta voltando para o sub menu");
 
                             break;
 
                         default:
+                            System.out.println("digite uma das opcoes validas");
+
                             break;
                     }
 
