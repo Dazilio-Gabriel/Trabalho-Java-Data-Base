@@ -1,4 +1,3 @@
-import java.text.BreakIterator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +17,6 @@ public class Main {
 
         ProdutosDAO produtosDAO = new ProdutosDAO();
         MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
-        Movimentacao movimentacao = new Movimentacao();
 
         /*
         // --- SPLASH SCREEN (agora funcional) ---
@@ -40,7 +38,8 @@ public class Main {
         System.out.println("#      PROFESSOR: HOWARD ROATTI                  #");
         System.out.println("#                                                #");
         System.out.println("##################################################\n");
-*/
+        */
+
         int opcao = -1;
         while (opcao != 0) {
             System.out.println("\n--- MENU PRINCIPAL ---");
@@ -85,6 +84,7 @@ public class Main {
                                     System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: [" + mov.getProdutos().getIdProduto() + "] " + mov.getProdutos().getNome() + " | Tipo: " + mov.getTipoMovimentacao() + " | Qtd: " + mov.getQuantidade() + " | Data: " + mov.getDataMov());
                                 }
                             }
+                            break;
 
                         case 2:
                             System.out.println("\n--- RELATÓRIO: TOTAL POR TIPO ---");
@@ -97,20 +97,16 @@ public class Main {
                                     System.out.println("Tipo: " + item.getTipoMovimentacao() + " | Total de Itens: " + item.getTotalQuantidade());
                                 }
                             }
-
                             break;
 
                         case 0:
-                            System.out.println("Voce esta voltando para o sub menu");
-
+                            System.out.println("Voce esta voltando para o menu principal");
                             break;
 
                         default:
                             System.out.println("digite uma das opcoes validas");
-
                             break;
                     }
-
                     break;
 
                 case 2:
@@ -125,33 +121,39 @@ public class Main {
 
                     Produtos novoProduto = new Produtos(0, nome, descricao, estoque);
                     produtosDAO.inserir(novoProduto);
-
                     break;
 
                 case 3:
                     System.out.println("\n--- INSERIR NOVA MOVIMENTACAO ---");
-
                     List<Produtos> listaDosProdutosMov = produtosDAO.listarTodos();
+                    if (listaDosProdutosMov == null || listaDosProdutosMov.isEmpty()) {
+                        System.out.println("ERRO: Cadastre produtos antes de inserir movimentações.");
+                        break;
+                    }
                     System.out.println("\n--- PRODUTOS CADASTRADOS ---");
                     for (Produtos produto : listaDosProdutosMov) {
                         System.out.println("ID: " + produto.getIdProduto() + " | Nome: " + produto.getNome());
                     }
                     System.out.println("---------------------------------------");
 
-                    System.out.println("digite o id do produto que voce ira movimentar");
+                    System.out.print("Digite o id do produto que voce ira movimentar: ");
                     int idProdMov = scanner.nextInt();
                     scanner.nextLine();
-                    System.out.println("digite o tipo da movimentacao");
+                    System.out.print("Digite o tipo da movimentacao (ENTRADA/SAIDA): ");
                     String tipoMov = scanner.nextLine();
-                    System.out.println("digite a quantidade atual");
+                    System.out.print("Digite a quantidade: ");
                     int quantidadeMov = scanner.nextInt();
+                    scanner.nextLine();
 
-                    Produtos produtoSelecionados = produtosDAO.buscarPorId(idProdMov);
+                    Produtos produtoSelecionado = produtosDAO.buscarPorId(idProdMov);
                     LocalDate localDate = LocalDate.now();
 
-                    Movimentacao novaMovimentacao = new Movimentacao(0, produtoSelecionados, tipoMov, quantidadeMov, localDate);
-                    movimentacaoDAO.inserir(novaMovimentacao);
-
+                    if (produtoSelecionado != null) {
+                        Movimentacao novaMovimentacao = new Movimentacao(0, produtoSelecionado, tipoMov, quantidadeMov, localDate);
+                        movimentacaoDAO.inserir(novaMovimentacao);
+                    } else {
+                        System.out.println("Erro: Produto com o ID informado não foi encontrado.");
+                    }
                     break;
 
                 case 4:
@@ -167,6 +169,10 @@ public class Main {
                         case 1:
                             System.out.println("\n--- ATUALIZAR PRODUTO ---");
                             List<Produtos> listaDosProdutos = produtosDAO.listarTodos();
+                            if (listaDosProdutos == null || listaDosProdutos.isEmpty()) {
+                                System.out.println("Nenhum produto cadastrado para atualizar.");
+                                break;
+                            }
                             System.out.println("\n--- PRODUTOS CADASTRADOS ---");
                             for (Produtos produto : listaDosProdutos) {
                                 System.out.println("ID: " + produto.getIdProduto() + " | Nome: " + produto.getNome());
@@ -176,6 +182,13 @@ public class Main {
                             System.out.print("Digite o ID do produto que deseja alterar: ");
                             int idParaAtualizar = scanner.nextInt();
                             scanner.nextLine();
+
+                            Produtos produtoOriginal = produtosDAO.buscarPorId(idParaAtualizar);
+                            if (produtoOriginal == null) {
+                                System.out.println("Erro: Produto com ID informado não encontrado.");
+                                break;
+                            }
+
                             System.out.print("Digite o NOVO nome do produto: ");
                             String novoNome = scanner.nextLine();
                             System.out.print("Digite a NOVA descrição: ");
@@ -186,12 +199,15 @@ public class Main {
 
                             Produtos produtoAtualizado = new Produtos(idParaAtualizar, novoNome, novaDescricao, novoEstoque);
                             produtosDAO.atualizar(produtoAtualizado);
-
                             break;
 
                         case 2:
                             System.out.println("\n--- ATUALIZAR MOVIMENTAÇÃO ---");
                             List<Movimentacao> listaDeMovimentacoes = movimentacaoDAO.listarTodos();
+                            if (listaDeMovimentacoes == null || listaDeMovimentacoes.isEmpty()) {
+                                System.out.println("Nenhuma movimentação cadastrada para atualizar.");
+                                break;
+                            }
                             System.out.println("\n--- MOVIMENTAÇÕES CADASTRADAS ---");
                             for (Movimentacao mov : listaDeMovimentacoes) {
                                 System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: " + mov.getProdutos().getNome());
@@ -201,6 +217,12 @@ public class Main {
                             System.out.print("Digite o ID da movimentação que você quer alterar: ");
                             int idMovimentacaoParaAtualizar = scanner.nextInt();
                             scanner.nextLine();
+
+                            Movimentacao movOriginal = movimentacaoDAO.buscarPorId(idMovimentacaoParaAtualizar);
+                            if (movOriginal == null) {
+                                System.out.println("Erro: Movimentação com ID informado não encontrada.");
+                                break;
+                            }
 
                             List<Produtos> produtosDisponiveis = produtosDAO.listarTodos();
                             System.out.println("\n--- PRODUTOS DISPONÍVEIS ---");
@@ -219,135 +241,130 @@ public class Main {
                             int novaQuantidade = scanner.nextInt();
                             scanner.nextLine();
                             LocalDate novaData = LocalDate.now();
-                            Produtos produtoSelecionado = produtosDAO.buscarPorId(novoIdProduto);
+                            Produtos produtoSelecionados = produtosDAO.buscarPorId(novoIdProduto);
 
-                            if (produtoSelecionado != null) {
-                                Movimentacao movimentacaoAtualizada = new Movimentacao(idMovimentacaoParaAtualizar, produtoSelecionado, novoTipo, novaQuantidade, novaData);
+                            if (produtoSelecionados != null) {
+                                Movimentacao movimentacaoAtualizada = new Movimentacao(idMovimentacaoParaAtualizar, produtoSelecionados, novoTipo, novaQuantidade, novaData);
                                 movimentacaoDAO.atualizar(movimentacaoAtualizada);
                             } else {
                                 System.out.println("Erro: Produto com o ID informado não foi encontrado.");
                             }
-
                             break;
 
                         case 0:
-                            System.out.println("\nvoce esta voltando para o menu inicial");
-
+                            System.out.println("\nVoltando ao menu principal");
                             break;
 
                         default:
                             System.out.println("Opção do sub-menu inválida.");
-
                             break;
                     }
-
                     break;
 
                 case 5:
-                    System.out.println("\n--- EXCLUIR REGISTRO ---");
-                    System.out.println("1 - Excluir Produto");
-                    System.out.println("2 - Excluir Movimentação");
-                    System.out.println("0 - Voltar");
-                    System.out.print("Escolha uma opção: ");
-                    int subOpcaoExcluir = scanner.nextInt();
-                    scanner.nextLine();
+                    String continuarExclusao;
+                    do {
+                        System.out.println("\n--- EXCLUIR REGISTRO ---");
+                        System.out.println("1 - Excluir Produto");
+                        System.out.println("2 - Excluir Movimentação");
+                        System.out.println("0 - Voltar ao Menu Principal");
+                        System.out.print("Escolha uma opção: ");
+                        int subOpcaoExcluir = scanner.nextInt();
+                        scanner.nextLine();
 
-                    switch (subOpcaoExcluir) {
-                        case 1:
-                            System.out.println("\n--- EXCLUIR PRODUTO ---");
-                            List<Produtos> listaDosProdutos = produtosDAO.listarTodos();
-                            System.out.println("\n--- PRODUTOS CADASTRADOS ---");
-                            for (Produtos produto : listaDosProdutos) {
-                                System.out.println("ID: " + produto.getIdProduto() + " | Nome: " + produto.getNome());
-                            }
-                            System.out.println("---------------------------------------");
-                            System.out.print("Digite o ID do produto que deseja remover: ");
-                            int idProdDel = scanner.nextInt();
-                            scanner.nextLine();
-                            int contagem = movimentacaoDAO.contarMovPorId(idProdDel);
+                        switch (subOpcaoExcluir) {
+                            case 1:
+                                System.out.println("\n--- EXCLUIR PRODUTO ---");
+                                List<Produtos> listaDosProdutos = produtosDAO.listarTodos();
+                                if (listaDosProdutos == null || listaDosProdutos.isEmpty()) {
+                                    System.out.println("Nenhum produto cadastrado para remover.");
+                                    break;
+                                }
+                                System.out.println("\n--- PRODUTOS CADASTRADOS ---");
+                                for (Produtos produto : listaDosProdutos) {
+                                    System.out.println("ID: " + produto.getIdProduto() + " | Nome: " + produto.getNome());
+                                }
+                                System.out.println("---------------------------------------");
+                                System.out.print("Digite o ID do produto que deseja remover: ");
+                                int idProdDel = scanner.nextInt();
+                                scanner.nextLine();
+                                int contagem = movimentacaoDAO.contarMovPorId(idProdDel);
 
-                            if (contagem > 0) {
-                                System.out.println("\nERRO: Este produto não pode ser removido, pois possui " + contagem + " movimentacoes associadas");
+                                if (contagem > 0) {
+                                    System.out.println("\nERRO: Este produto não pode ser removido, pois possui " + contagem + " movimentacao(ões) associada(s).");
+                                } else {
+                                    Produtos produtoParaRemover = produtosDAO.buscarPorId(idProdDel);
+                                    if (produtoParaRemover != null) {
+                                        System.out.print("Tem certeza que deseja remover o produto '" + produtoParaRemover.getNome() + "'? (S/N): ");
+                                        String confirmacao = scanner.nextLine();
+                                        if (confirmacao.equalsIgnoreCase("S")) {
+                                            produtosDAO.deletar(idProdDel);
+                                            System.out.println("Produto removido com sucesso!");
+                                        } else {
+                                            System.out.println("Operação cancelada.");
+                                        }
+                                    } else {
+                                        System.out.println("Erro: Produto com o ID informado não foi encontrado.");
+                                    }
+                                }
+                                break;
 
-                            } else {
-                                Produtos produtoParaRemover = produtosDAO.buscarPorId(idProdDel);
+                            case 2:
+                                System.out.println("\n--- EXCLUIR MOVIMENTAÇÃO ---");
+                                List<Movimentacao> listaDeMovimentacoes = movimentacaoDAO.listarTodos();
+                                if (listaDeMovimentacoes == null || listaDeMovimentacoes.isEmpty()) {
+                                    System.out.println("Nenhuma movimentação cadastrada para remover.");
+                                    break;
+                                }
+                                System.out.println("\n--- MOVIMENTAÇÕES CADASTRADAS ---");
+                                for (Movimentacao mov : listaDeMovimentacoes) {
+                                    System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: " + mov.getProdutos().getNome() + " | Tipo: " + mov.getTipoMovimentacao());
+                                }
+                                System.out.println("-------------------------------------------------");
+                                System.out.print("Digite o ID da movimentação que você deseja excluir: ");
+                                int idMovDel = scanner.nextInt();
+                                scanner.nextLine();
 
-                                if (produtoParaRemover != null) {
-                                    System.out.print("Tem certeza que deseja remover o produto '" + produtoParaRemover.getNome() + "'? (S/N): ");
+                                Movimentacao movimentacaoParaRemover = movimentacaoDAO.buscarPorId(idMovDel);
+                                if (movimentacaoParaRemover != null) {
+                                    System.out.print("Tem certeza que deseja remover a movimentação de '" + movimentacaoParaRemover.getTipoMovimentacao() + "' do produto '" + movimentacaoParaRemover.getProdutos().getNome() + "'? (S/N): ");
                                     String confirmacao = scanner.nextLine();
-
                                     if (confirmacao.equalsIgnoreCase("S")) {
-                                        produtosDAO.deletar(idProdDel);
+                                        movimentacaoDAO.deletar(idMovDel);
+                                        System.out.println("Movimentação removida com sucesso!");
                                     } else {
                                         System.out.println("Operação cancelada.");
                                     }
                                 } else {
-                                    System.out.println("Erro: Produto com o ID informado não foi encontrado.");
+                                    System.out.println("Erro: Movimentação com o ID informado não foi encontrada.");
                                 }
-                                System.out.println("deseja remover mais algum produto? (S/N)");
-                                String continuar = scanner.nextLine();
+                                break;
 
-                                if (continuar.equalsIgnoreCase("S")) {
-                                    return case 1;
-                                }
-                                else {
-                                    System.out.println("Voltando ao sub menu de exclusao de produtos");
-                                }
+                            case 0:
+                                System.out.println("\nVoltando ao menu principal...");
+                                break;
 
-                            }
-                            break;
+                            default:
+                                System.out.println("Opção do sub-menu inválida.");
+                                break;
+                        }
 
-                        case 2:
-                            System.out.println("\n--- EXCLUIR MOVIMENTAÇÃO ---");
-                            List<Movimentacao> listaDeMovimentacoes = movimentacaoDAO.listarTodos();
-                            System.out.println("\n--- MOVIMENTAÇÕES CADASTRADAS ---");
-                            for (Movimentacao mov : listaDeMovimentacoes) {
-                                System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: " + mov.getProdutos().getNome() + " | Tipo: " + mov.getTipoMovimentacao());
-                            }
-                            System.out.println("-------------------------------------------------");
-                            System.out.print("Digite o ID da movimentação que você deseja excluir: ");
-                            int idMovDel = scanner.nextInt();
-                            scanner.nextLine();
+                        if (subOpcaoExcluir != 0) {
+                            System.out.print("\nDeseja remover outro registro? (S/N): ");
+                            continuarExclusao = scanner.nextLine();
+                        } else {
+                            continuarExclusao = "N";
+                        }
 
-                            Movimentacao movimentacaoParaRemover = movimentacaoDAO.buscarPorId(idMovDel);
-
-                            if (movimentacaoParaRemover != null) {
-                                System.out.print("Tem certeza que deseja remover a movimentação de '" + movimentacaoParaRemover.getTipoMovimentacao() + "' do produto '" + movimentacaoParaRemover.getProdutos().getNome() + "'? (S/N): ");
-                                String confirmacao = scanner.nextLine();
-
-                                if (confirmacao.equalsIgnoreCase("S")) {
-                                    movimentacaoDAO.deletar(idMovDel);
-                                } else {
-
-                                    System.out.println("Operação cancelada.");
-                                }
-                            } else {
-
-                                System.out.println("Erro: Movimentação com o ID informado não foi encontrada.");
-                            }
-
-                            break;
-
-                        case 0:
-                            System.out.println("\nvoce esta voltando para o menu inicial");
-
-                            break;
-
-                        default:
-                            System.out.println("Opção do sub-menu inválida.");
-
-                            break;
-                    }
+                    } while (continuarExclusao.equalsIgnoreCase("S"));
                     break;
 
                 case 0:
                     System.out.println("Saindo do sistema... Até logo!");
-
                     break;
 
                 default:
                     System.out.println("Opção inválida! Por favor, escolha uma opção do menu.");
-
                     break;
             }
         }
