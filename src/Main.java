@@ -284,6 +284,16 @@ public class Main {
                                 } else {
                                     System.out.println("Erro: Produto com o ID informado não foi encontrado.");
                                 }
+                                System.out.println("deseja remover mais algum produto? (S/N)");
+                                String continuar = scanner.nextLine();
+
+                                if (continuar.equalsIgnoreCase("S")) {
+                                    return case 1;
+                                }
+                                else {
+                                    System.out.println("Voltando ao sub menu de exclusao de produtos");
+                                }
+
                             }
                             break;
 
