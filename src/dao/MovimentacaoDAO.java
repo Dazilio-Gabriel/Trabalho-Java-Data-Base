@@ -24,30 +24,60 @@ public class MovimentacaoDAO {
     }
 
     public void inserir(Movimentacao movimentacao) {
+        String sqlInsert = "INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES (?, ?, ?, ?)";
+        String sqlUpdateProduto = "";
 
-        String sql = "INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) values (?, ?, ?, ?)";
+        int idProduto = movimentacao.getProdutos().getIdProduto();
+        int quantidade = movimentacao.getQuantidade();
+        String tipoMov = movimentacao.getTipoMovimentacao();
 
-        try (Connection conn = conexaoDB.getConexao()) {
 
+        if ("ENTRADA".equalsIgnoreCase(tipoMov)) {
+            sqlUpdateProduto = "UPDATE produtos SET quantidade_estoque = quantidade_estoque + ? WHERE id_produto = ?";
+        } else if ("SAIDA".equalsIgnoreCase(tipoMov)) {
+            sqlUpdateProduto = "UPDATE produtos SET quantidade_estoque = quantidade_estoque - ? WHERE id_produto = ?";
+        } else {
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.WARNING, "Tipo de movimentação inválido: " + tipoMov);
+            System.err.println("Erro: Tipo de movimentação inválido '" + tipoMov + "'. Apenas 'ENTRADA' ou 'SAIDA' são permitidos.");
+            return;
+        }
+
+        Connection conn = null;
+        PreparedStatement stmtInsert = null;
+        PreparedStatement stmtUpdate = null;
+
+        try {
+            conn = conexaoDB.getConexao();
             if (conn == null) {
-                System.err.println("falha na conexao");
+                System.err.println("Falha na conexao");
                 return;
             }
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmtInsert = conn.prepareStatement(sqlInsert);
+            stmtInsert.setInt(1, idProduto);
+            stmtInsert.setString(2, tipoMov);
+            stmtInsert.setInt(3, quantidade);
+            stmtInsert.setDate(4, java.sql.Date.valueOf(movimentacao.getDataMov()));
+            stmtInsert.executeUpdate();
+            System.out.println("Movimentação do produto '" + movimentacao.getProdutos().getNome() + "' inserida com sucesso!");
 
-            stmt.setInt(1, movimentacao.getProdutos().getIdProduto());
-            stmt.setString(2, movimentacao.getTipoMovimentacao());
-            stmt.setInt(3, movimentacao.getQuantidade());
-            stmt.setDate(4, java.sql.Date.valueOf(movimentacao.getDataMov()));
-
-            stmt.executeUpdate();
-            System.out.println("Movimentação do produto '" + movimentacao.getProdutos().getNome() + "movimentacao inserida com sucesso");
-
+            stmtUpdate = conn.prepareStatement(sqlUpdateProduto);
+            stmtUpdate.setInt(1, quantidade);
+            stmtUpdate.setInt(2, idProduto);
+            stmtUpdate.executeUpdate();
+            System.out.println("Estoque do produto ID " + idProduto + " atualizado.");
 
         } catch (SQLException e) {
-            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "erro para inserir a movimentacao", e);
-            System.err.println("erro para inserir a movimentacao, tente novamente mais tarde");
+            Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "Erro ao inserir movimentacao e atualizar estoque", e);
+            System.err.println("Erro ao processar movimentacao, tente novamente mais tarde");
+        } finally {
+            try {
+                if (stmtInsert != null) stmtInsert.close();
+                if (stmtUpdate != null) stmtUpdate.close();
+                if (conn != null) conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(MovimentacaoDAO.class.getName()).log(Level.SEVERE, "Erro ao fechar recursos JDBC", ex);
+            }
         }
     }
 
@@ -242,7 +272,7 @@ public class MovimentacaoDAO {
                 int total = rs.getInt("total");
 
                 RelatorioAgrupado itemRelatorios = new RelatorioAgrupado(tipo, total);
-                gerarRelatorioSomaPorTipo().add(itemRelatorios);
+                relatoriosAgrupados.add(itemRelatorios);
             }
 
 
@@ -252,6 +282,4 @@ public class MovimentacaoDAO {
 
         return relatoriosAgrupados;
     }
-
-
 }

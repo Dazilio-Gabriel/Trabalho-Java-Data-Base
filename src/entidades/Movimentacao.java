@@ -12,18 +12,16 @@ public class Movimentacao {
     private char sr_deleted;
 
     public Movimentacao() {
-
+        this.sr_deleted = 'F';
     }
 
     public Movimentacao(int idMovimentacao, Produtos produto, String tipoMovimentacao, int quantidade, LocalDate dataMov) {
-
         this.idMovimentacao = idMovimentacao;
-        this.produtos = produtos;
+        this.produtos = produto;
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
         this.dataMov = dataMov;
         this.sr_deleted = 'F';
-
     }
 
     public int getIdMovimentacao() {
@@ -76,9 +74,10 @@ public class Movimentacao {
 
     @Override
     public String toString() {
+        String nomeProduto = (produtos != null) ? produtos.getNome() : "null";
         return "Movimentacao{" +
                 "idMovimentacao=" + idMovimentacao +
-                ", produtos=" + produtos +
+                ", produto=" + nomeProduto +
                 ", tipoMovimentacao='" + tipoMovimentacao + '\'' +
                 ", quantidade=" + quantidade +
                 ", dataMov=" + dataMov +

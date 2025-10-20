@@ -1,11 +1,13 @@
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
 import dao.MovimentacaoDAO;
 import dao.ProdutosDAO;
 import entidades.Movimentacao;
 import entidades.Produtos;
 import entidades.RelatorioAgrupado;
+
 import java.time.LocalDate;
 
 public class Main {
@@ -24,8 +26,8 @@ public class Main {
         System.out.println("#        SISTEMA DE CONTROLE DE ESTOQUE          #");
         System.out.println("#                                                #");
         System.out.println("#      TOTAL DE REGISTROS EXISTENTES             #");
-        System.out.printf("#  1 - PRODUTOS:      %5d                    #%n", totalProdutos);
-        System.out.printf("#  2 - MOVIMENTAÇÕES: %5d                    #%n", totalMovimentacoes);
+        System.out.printf("#  1 - PRODUTOS:      %5d                      #%n", totalProdutos);
+        System.out.printf("#  2 - MOVIMENTAÇÕES: %5d                      #%n", totalMovimentacoes);
         System.out.println("#                                                #");
         System.out.println("#      CRIADO POR: GABRIEL DAZILIO               #");
         System.out.println("#                  VICTOR CASTRO                 #");
@@ -34,7 +36,6 @@ public class Main {
         System.out.println("#      PROFESSOR: HOWARD ROATTI                  #");
         System.out.println("#                                                #");
         System.out.println("##################################################\n");
-
 
         int opcao = -1;
         while (opcao != 0) {
@@ -63,6 +64,7 @@ public class Main {
                         System.out.println("\n--- RELATORIOS ---");
                         System.out.println("1 - Listar Todas as Movimentações (com Nome do Produto)");
                         System.out.println("2 - Total de Itens Movimentados por Tipo");
+                        System.out.println("3 - Produtos Cadastrados no sistema");
                         System.out.println("0 - Voltar");
                         System.out.print("Escolha uma opção: ");
                         int subOpcaoRelatorios = scanner.nextInt();
@@ -94,6 +96,18 @@ public class Main {
                                     }
                                 }
                                 break;
+
+                            case 3:
+                                List<Produtos> listaDosProdutosRelatorios = produtosDAO.listarTodos();
+                                System.out.println("\n--- PRODUTOS CADASTRADOS ---");
+                                for (Produtos produto : listaDosProdutosRelatorios) {
+                                    System.out.println("ID: " + produto.getIdProduto() + " | Nome: " + produto.getNome() + " | Quantidade: " + produto.getEstoque());
+                                }
+                                System.out.println("---------------------------------------");
+
+
+                                break;
+
                             case 0:
                                 System.out.println("Voltando ao menu principal");
                                 break;
