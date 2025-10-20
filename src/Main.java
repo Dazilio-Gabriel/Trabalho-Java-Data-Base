@@ -18,16 +18,17 @@ public class Main {
         ProdutosDAO produtosDAO = new ProdutosDAO();
         MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
 
-        /*
-        // --- SPLASH SCREEN (agora funcional) ---
-        int totalProdutos = produtosDAO.contarRegistros();
+        // --- SPLASH SCREEN (Funcional) ---
+        int totalProdutos = produtosDAO.();
         int totalMovimentacoes = movimentacaoDAO.contarRegistros();
 
+        // Imprime a tela formatada, similar ao exemplo do professor
         System.out.println("##################################################");
         System.out.println("#                                                #");
-        System.out.println("#        SISTEMA DE CONTROLE DE ESTQUE          #");
+        System.out.println("#        SISTEMA DE CONTROLE DE ESTOQUE          #");
         System.out.println("#                                                #");
         System.out.println("#      TOTAL DE REGISTROS EXISTENTES             #");
+        // Use printf para alinhar os números à direitae
         System.out.printf("#  1 - PRODUTOS:      %5d                    #%n", totalProdutos);
         System.out.printf("#  2 - MOVIMENTAÇÕES: %5d                    #%n", totalMovimentacoes);
         System.out.println("#                                                #");
@@ -35,10 +36,9 @@ public class Main {
         System.out.println("#                  VICTOR CASTRO                 #");
         System.out.println("#                                                #");
         System.out.println("#      DISCIPLINA: BANCO DE DADOS                #");
-        System.out.println("#      PROFESSOR: HOWARD ROATTI                  #");
+        System.out.println("#      PROFESSOR: HOWARD ROATTI                  #"); [cite_start]// Mantém o nome do professor [cite: 180]
         System.out.println("#                                                #");
         System.out.println("##################################################\n");
-        */
 
         int opcao = -1;
         while (opcao != 0) {

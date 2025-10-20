@@ -153,10 +153,33 @@ public class ProdutosDAO {
                 produtos.add(itens);
 
             }
-            
+
         } catch (SQLException e) {
             Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "erro para listar todos", e);
         }
         return produtos;
+    }
+
+    public int contarRegistros() {
+        String sql = "SELECT COUNT(*) FROM produtos WHERE sr_deleted = 'F'";
+
+        try (Connection conn = conexaoDB.getConexao()) {
+            if (conn == null) {
+                System.err.println("Falha na conexao.");
+                return 0;
+            }
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, "Falha ao contar produtos", e);
+        }
+
+        return 0;
     }
 }
