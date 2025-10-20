@@ -10,7 +10,7 @@ public class conexaoDB {
 
     private static final String URL = "jdbc:mysql://localhost:3306/controle_estoque";
     private static final String USER = "root";
-    private static final String PASSWORD = "trabalhobancos";
+    private static final String PASSWORD = "trabalhobanco";
     private static final Logger logger = Logger.getLogger(conexaoDB.class.getName());
 
     public static Connection getConexao() {

@@ -1,13 +1,11 @@
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
 import dao.MovimentacaoDAO;
 import dao.ProdutosDAO;
 import entidades.Movimentacao;
 import entidades.Produtos;
 import entidades.RelatorioAgrupado;
-
 import java.time.LocalDate;
 
 public class Main {
@@ -18,17 +16,14 @@ public class Main {
         ProdutosDAO produtosDAO = new ProdutosDAO();
         MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO();
 
-        // --- SPLASH SCREEN (Funcional) ---
-        int totalProdutos = produtosDAO.();
+        int totalProdutos = produtosDAO.contarRegistros();
         int totalMovimentacoes = movimentacaoDAO.contarRegistros();
 
-        // Imprime a tela formatada, similar ao exemplo do professor
         System.out.println("##################################################");
         System.out.println("#                                                #");
         System.out.println("#        SISTEMA DE CONTROLE DE ESTOQUE          #");
         System.out.println("#                                                #");
         System.out.println("#      TOTAL DE REGISTROS EXISTENTES             #");
-        // Use printf para alinhar os números à direitae
         System.out.printf("#  1 - PRODUTOS:      %5d                    #%n", totalProdutos);
         System.out.printf("#  2 - MOVIMENTAÇÕES: %5d                    #%n", totalMovimentacoes);
         System.out.println("#                                                #");
@@ -36,9 +31,10 @@ public class Main {
         System.out.println("#                  VICTOR CASTRO                 #");
         System.out.println("#                                                #");
         System.out.println("#      DISCIPLINA: BANCO DE DADOS                #");
-        System.out.println("#      PROFESSOR: HOWARD ROATTI                  #"); [cite_start]// Mantém o nome do professor [cite: 180]
+        System.out.println("#      PROFESSOR: HOWARD ROATTI                  #");
         System.out.println("#                                                #");
         System.out.println("##################################################\n");
+
 
         int opcao = -1;
         while (opcao != 0) {
@@ -61,51 +57,60 @@ public class Main {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1: // Relatórios
-                    System.out.println("\n--- RELATORIOS ---");
-                    System.out.println("1 - Listar Todas as Movimentações (com Nome do Produto)");
-                    System.out.println("2 - Total de Itens Movimentados por Tipo");
-                    System.out.println("0 - Voltar");
-                    System.out.print("Escolha uma opção: ");
-                    int subOpcaoRelatorios = scanner.nextInt();
-                    scanner.nextLine();
+                case 1:
+                    String continuarRelatorio;
+                    do {
+                        System.out.println("\n--- RELATORIOS ---");
+                        System.out.println("1 - Listar Todas as Movimentações (com Nome do Produto)");
+                        System.out.println("2 - Total de Itens Movimentados por Tipo");
+                        System.out.println("0 - Voltar");
+                        System.out.print("Escolha uma opção: ");
+                        int subOpcaoRelatorios = scanner.nextInt();
+                        scanner.nextLine();
 
-                    switch (subOpcaoRelatorios) {
-                        case 1:
-                            System.out.println("\n--- TODAS AS MOVIMENTACOES REGISTRADAS ---");
-                            List<Movimentacao> listaMovimentacoesRelatorio = movimentacaoDAO.listarTodos();
+                        switch (subOpcaoRelatorios) {
+                            case 1:
+                                System.out.println("\n--- TODAS AS MOVIMENTACOES REGISTRADAS ---");
+                                List<Movimentacao> listaMovimentacoesRelatorio = movimentacaoDAO.listarTodos();
 
-                            if (listaMovimentacoesRelatorio == null || listaMovimentacoesRelatorio.isEmpty()) {
-                                System.out.println("Nenhuma movimentação encontrada.");
-                            } else {
-                                for (Movimentacao mov : listaMovimentacoesRelatorio) {
-                                    System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: [" + mov.getProdutos().getIdProduto() + "] " + mov.getProdutos().getNome() + " | Tipo: " + mov.getTipoMovimentacao() + " | Qtd: " + mov.getQuantidade() + " | Data: " + mov.getDataMov());
+                                if (listaMovimentacoesRelatorio == null || listaMovimentacoesRelatorio.isEmpty()) {
+                                    System.out.println("Nenhuma movimentação encontrada.");
+                                } else {
+                                    for (Movimentacao mov : listaMovimentacoesRelatorio) {
+                                        System.out.println("ID: " + mov.getIdMovimentacao() + " | Produto: [" + mov.getProdutos().getIdProduto() + "] " + mov.getProdutos().getNome() + " | Tipo: " + mov.getTipoMovimentacao() + " | Qtd: " + mov.getQuantidade() + " | Data: " + mov.getDataMov());
+                                    }
                                 }
-                            }
-                            System.out.println("---------------------------------------------------------------------");
-                            break;
-                        case 2:
-                            System.out.println("\n--- RELATÓRIO: TOTAL POR TIPO ---");
-                            List<RelatorioAgrupado> resultadoAgrupado = movimentacaoDAO.gerarRelatorioSomaPorTipo();
+                                System.out.println("---------------------------------------------------------------------");
+                                break;
+                            case 2:
+                                System.out.println("\n--- RELATÓRIO: TOTAL POR TIPO ---");
+                                List<RelatorioAgrupado> resultadoAgrupado = movimentacaoDAO.gerarRelatorioSomaPorTipo();
 
-                            if (resultadoAgrupado == null || resultadoAgrupado.isEmpty()) {
-                                System.out.println("Nenhum dado encontrado para agrupar.");
-                            } else {
-                                for (RelatorioAgrupado item : resultadoAgrupado) {
-                                    System.out.println("Tipo: " + item.getTipoMovimentacao() + " | Total de Itens: " + item.getTotalQuantidade());
+                                if (resultadoAgrupado == null || resultadoAgrupado.isEmpty()) {
+                                    System.out.println("Nenhum dado encontrado para agrupar.");
+                                } else {
+                                    for (RelatorioAgrupado item : resultadoAgrupado) {
+                                        System.out.println("Tipo: " + item.getTipoMovimentacao() + " | Total de Itens: " + item.getTotalQuantidade());
+                                    }
                                 }
-                            }
-                            break;
-                        case 0:
-                            System.out.println("Voltando ao menu principal");
-                            break;
-                        default:
-                            System.out.println("Opção de relatório inválida.");
-                            break;
-                    }
+                                break;
+                            case 0:
+                                System.out.println("Voltando ao menu principal");
+                                break;
+                            default:
+                                System.out.println("Opção de relatório inválida.");
+                                break;
+                        }
+                        if (subOpcaoRelatorios != 0) {
+                            System.out.print("\nDeseja ver outro relatório? (S/N): ");
+                            continuarRelatorio = scanner.nextLine();
+                        } else {
+                            continuarRelatorio = "N";
+                        }
+                    } while (continuarRelatorio.equalsIgnoreCase("S"));
                     break;
 
-                case 2: // Inserir Registro
+                case 2:
                     String continuarInsercao;
                     do {
                         System.out.println("\n--- INSERIR REGISTRO ---");
@@ -180,7 +185,7 @@ public class Main {
                     } while (continuarInsercao.equalsIgnoreCase("S"));
                     break;
 
-                case 3: // Remover Registro
+                case 3:
                     String continuarRemocao;
                     do {
                         System.out.println("\n--- REMOVER REGISTRO ---");
@@ -278,7 +283,7 @@ public class Main {
                     } while (continuarRemocao.equalsIgnoreCase("S"));
                     break;
 
-                case 4: // Atualizar Registro - AGORA COM O LOOP E EXIBIÇÃO
+                case 4:
                     String continuarAtualizacao;
                     do {
                         System.out.println("\n--- ATUALIZAR REGISTRO ---");
