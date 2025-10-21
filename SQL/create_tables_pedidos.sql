@@ -6,7 +6,7 @@ USE controle_estoque_novo;
 DROP TABLE IF EXISTS movimentacao;
 DROP TABLE IF EXISTS produtos;
 
-/* cria as tabelas do banco de dados */
+/* cria as tabelas do banco (produtos / movimentacao */
 CREATE TABLE produtos (
   id_produto INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(100) NOT NULL,

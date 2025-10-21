@@ -1,0 +1,9 @@
+
+/*INSERE DADOS NA TABELA DE MOVIMENTACAOÍ*/
+
+INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES (11, 'entrada', 2, '2025-10-20');
+INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES (15, 'entrada', 5, '2025-10-20');
+INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES (15, 'entrada', 50, '2025-10-20');
+INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES (16, 'entrada', 200, '2025-10-20');
+INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES (14, 'saida', 5, '2025-10-20');
+INSERT INTO movimentacao (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES (20, 'entrada', 2, '2025-10-20');
