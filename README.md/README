@@ -1,108 +1,55 @@
-# Sistema de Controle de Estoque
+# 📦 Sistema de Controle de Estoque
 
-## Integrantes do Grupo
+## 👥 Integrantes do Grupo
 
 - Gabriel Dazilio
 - Victor Castro
 
-## Disciplina e Professor
+## 👨‍🏫 Disciplina e Professor
 
-- [cite_start]**Disciplina:** Banco de Dados [cite: 2, 87]
-- [cite_start]**Professor:** Howard Roatti [cite: 3, 87]
+- **Disciplina:** Banco de Dados
+- **Professor:** Howard Roatti
 
-## Descrição do Projeto
+## 📝 Descrição do Projeto
 
-Este projeto consiste no desenvolvimento de uma aplicação de console em Java para simular um sistema de controle de estoque. [cite_start]O sistema permite o gerenciamento de produtos e suas respectivas movimentações (entradas e saídas), interagindo diretamente com um banco de dados MySQL[cite: 1, 18]. [cite_start]A comunicação com o banco de dados é realizada utilizando JDBC puro, sem o auxílio de frameworks ORM, conforme especificado nos requisitos[cite: 123, 124]. O objetivo é aplicar os conceitos de modelagem relacional, linguagem SQL e integração entre aplicação e banco de dados.
+Este projeto consiste no desenvolvimento de uma aplicação de console em **Java** para simular um sistema de controle de estoque. O sistema permite o gerenciamento de **produtos** e suas respectivas **movimentações** (entradas e saídas), interagindo diretamente com um banco de dados **MySQL**. A comunicação com o banco de dados é realizada utilizando **JDBC puro**, sem o auxílio de frameworks ORM, conforme especificado nos requisitos. O objetivo é aplicar os conceitos de modelagem relacional, linguagem SQL e integração entre aplicação e banco de dados.
 
-## Funcionalidades Implementadas
+## ✨ Funcionalidades Implementadas
 
-[cite_start]O sistema oferece as seguintes funcionalidades através de um menu interativo no console[cite: 19]:
+O sistema oferece as seguintes funcionalidades através de um menu interativo no console:
 
-- [cite_start]**Relatórios:** [cite: 20]
-  - [cite_start]Listagem de todas as movimentações registradas (não excluídas logicamente), exibindo detalhes do produto associado (Nome e ID)[cite: 42]. (Consulta com Junção implícita via DAO).
-  - [cite_start]Relatório de total de itens movimentados, agrupado por tipo (ENTRADA/SAIDA)[cite: 40]. (Consulta com Agrupamento/Sumarização).
-- [cite_start]**Inserir Registro:** [cite: 21]
-  - [cite_start]Sub-menu para escolher entre inserir Produto ou Movimentação[cite: 45].
-  - [cite_start]Cadastro de novos Produtos (nome, descrição, estoque inicial)[cite: 47].
-  - [cite_start]Cadastro de novas Movimentações (associando a um produto existente, tipo, quantidade), com atualização automática do estoque do produto[cite: 47, 48].
-  - [cite_start]Loop opcional para inserir múltiplos registros[cite: 49].
-- [cite_start]**Remover Registro:** [cite: 22]
-  - [cite_start]Sub-menu para escolher entre remover Produto ou Movimentação[cite: 52].
-  - [cite_start]Listagem dos registros existentes (ID e Nome/Tipo) para seleção[cite: 54].
-  - Implementação de "soft delete" (atualiza o campo `sr_deleted` para 'T') em vez de exclusão física.
-  - [cite_start]Verificação de chave estrangeira: impede a remoção de um Produto se ele possuir movimentações associadas[cite: 58].
-  - [cite_start]Confirmação do usuário ("Tem certeza? S/N") antes de efetivar a remoção[cite: 56].
-  - [cite_start]Loop opcional para remover múltiplos registros[cite: 59].
-- [cite_start]**Atualizar Registro:** [cite: 23]
-  - [cite_start]Sub-menu para escolher entre atualizar Produto ou Movimentação[cite: 64].
-  - [cite_start]Listagem dos registros existentes (ID e Nome/Tipo) para seleção[cite: 66].
-  - [cite_start]Permite a alteração dos dados de Produtos (nome, descrição, estoque)[cite: 69].
-  - [cite_start]Permite a alteração dos dados de Movimentações (produto associado, tipo, quantidade)[cite: 69].
-  - [cite_start]Exibição do registro com os dados atualizados após a operação[cite: 72].
-  - [cite_start]Loop opcional para atualizar múltiplos registros[cite: 73].
-- [cite_start]**Splash Screen:** Exibição inicial com nome do sistema, integrantes e contagem atual de registros nas tabelas `produtos` e `movimentacao`[cite: 27, 28].
+- **📊 Relatórios:**
+  - Listagem de todas as movimentações registradas (não excluídas logicamente), exibindo detalhes do produto associado (Nome e ID). (Consulta com Junção implícita via DAO).
+  - Relatório de total de itens movimentados, agrupado por tipo (ENTRADA/SAIDA). (Consulta com Agrupamento/Sumarização).
+- **➕ Inserir Registro:**
+  - Sub-menu para escolher entre inserir **Produto** ou **Movimentação**.
+  - Cadastro de novos **Produtos** (nome, descrição, estoque inicial).
+  - Cadastro de novas **Movimentações** (associando a um produto existente, tipo, quantidade), com atualização automática do estoque do produto.
+  - Loop opcional para inserir múltiplos registros ("Deseja continuar?").
+- **➖ Remover Registro:**
+  - Sub-menu para escolher entre remover **Produto** ou **Movimentação**.
+  - Listagem dos registros existentes (ID e Nome/Tipo) para seleção.
+  - Implementação de **"soft delete"** (atualiza o campo `sr_deleted` para 'T') em vez de exclusão física.
+  - Verificação de chave estrangeira: impede a remoção de um **Produto** se ele possuir movimentações associadas.
+  - Confirmação do usuário ("Tem certeza? S/N") antes de efetivar a remoção.
+  - Loop opcional para remover múltiplos registros ("Deseja continuar?").
+- **🔄 Atualizar Registro:**
+  - Sub-menu para escolher entre atualizar **Produto** ou **Movimentação**.
+  - Listagem dos registros existentes (ID e Nome/Tipo) para seleção.
+  - Permite a alteração dos dados de **Produtos** (nome, descrição, estoque).
+  - Permite a alteração dos dados de **Movimentações** (produto associado, tipo, quantidade).
+  - Exibição do registro com os dados atualizados após a operação.
+  - Loop opcional para atualizar múltiplos registros ("Deseja continuar?").
+- **🖥️ Splash Screen:** Exibição inicial com nome do sistema, integrantes e contagem atual de registros nas tabelas `produtos` e `movimentacao`.
 
-## Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 - **Linguagem:** Java (JDK 17+)
-- [cite_start]**Banco de Dados:** MySQL 8.0+ [cite: 17, 92]
-- [cite_start]**Conectividade:** JDBC (via MySQL Connector/J 9.4.0) [cite: 123]
+- **Banco de Dados:** MySQL 8.0+
+- **Conectividade:** JDBC (via MySQL Connector/J 9.4.0)
 - **Controle de Versão:** Git / GitHub
 - **IDE:** IntelliJ IDEA
 
-## Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
-## Configuração do Ambiente
-
-### Banco de Dados
-
-1.  **Instalar MySQL Server:** Certifique-se de ter o MySQL Server (versão 8.0 ou superior) instalado e em execução[cite: 17, 92].
-2.  **Criar Schema:** Utilize um cliente MySQL (como MySQL Workbench) para criar o schema (banco de dados). O nome utilizado no código é `controle_estoque_novo`.
-    ```sql
-    CREATE SCHEMA IF NOT EXISTS controle_estoque_novo DEFAULT CHARACTER SET utf8mb4 ;
-    ```
-    _(Schema criado conforme)_
-3.  **Executar Script:** Execute o script SQL (`create_tables.sql` ou similar, presente no repositório) dentro do schema `controle_estoque_novo` para criar as tabelas `produtos` e `movimentacao` com seus relacionamentos e constraints[cite: 17, 77]. Tabelas verificadas em.
-4.  **Verificar Credenciais:** Confirme se o usuário (`root`) e a senha (`senhasupersecreta`) definidos no arquivo `src/utils/conexaoDB.java` estão corretos para acessar o seu servidor MySQL. Ajuste se necessário. Senha verificada em.
-
-### Projeto Java
-
-1.  **JDK:** Verifique se o Java Development Kit (JDK), versão 17 ou compatível, está instalado (`java -version`).
-2.  **Driver JDBC:** Baixe o MySQL Connector/J (arquivo `.jar`, versão 9.4.0 utilizada) e coloque-o na pasta `lib` do projeto. Adicione-o como biblioteca no seu IDE.
-
-## Como Executar o Projeto (Linux) [cite: 82]
-
-Siga estas etapas no terminal Linux para compilar e executar a aplicação[cite: 83]:
-
-1.  **Navegue até a Raiz do Projeto:**
-    Use o comando `cd` para entrar no diretório principal do projeto (onde estão as pastas `src` e `lib`).
-
-    ```bash
-    cd caminho/para/ControleEstoque
-    ```
-
-2.  **Compile as Classes Java:**
-    Utilize o `javac`, incluindo o driver JDBC no classpath (`-cp`) e especificando o diretório de saída (`-d`).
-
-    ```bash
-    javac -cp "lib/mysql-connector-j-9.4.0.jar:." -d out src/*.java src/dao/*.java src/entidades/*.java src/utils/*.java
-    ```
-
-    _(Certifique-se que `mysql-connector-j-9.4.0.jar` é o nome exato do seu arquivo .jar na pasta `lib`. O `:` separa os diretórios no classpath do Linux)_
-
-3.  **Execute a Classe Principal:**
-    Utilize o `java`, incluindo a pasta `out` (onde estão os `.class`) e o driver JDBC no classpath.
-
-    ```bash
-    java -cp "lib/mysql-connector-j-9.4.0.jar:out:." Main
-    ```
-
-    _(Certifique-se que `mysql-connector-j-9.4.0.jar` é o nome exato do seu arquivo .jar)_
-
-4.  **Interaja:** O menu principal será exibido. Siga as instruções para testar as funcionalidades.
-
-## Vídeo Demonstrativo [cite: 80]
-
-Um vídeo demonstrando todas as funcionalidades do sistema está disponível no YouTube:
-
-[**COLE O LINK DO SEU VÍDEO NO YOUTUBE AQUI**]
+O projeto segue uma estrutura de pacotes para organizar as responsabilidades:
