@@ -52,4 +52,57 @@ Este projeto consiste no desenvolvimento de uma aplicação de console em Java p
 
 ## Estrutura do Projeto
 
-O projeto segue uma estrutura de pacotes para organizar as responsabilidades:
+## Configuração do Ambiente
+
+### Banco de Dados
+
+1.  **Instalar MySQL Server:** Certifique-se de ter o MySQL Server (versão 8.0 ou superior) instalado e em execução[cite: 17, 92].
+2.  **Criar Schema:** Utilize um cliente MySQL (como MySQL Workbench) para criar o schema (banco de dados). O nome utilizado no código é `controle_estoque_novo`.
+    ```sql
+    CREATE SCHEMA IF NOT EXISTS controle_estoque_novo DEFAULT CHARACTER SET utf8mb4 ;
+    ```
+    _(Schema criado conforme)_
+3.  **Executar Script:** Execute o script SQL (`create_tables.sql` ou similar, presente no repositório) dentro do schema `controle_estoque_novo` para criar as tabelas `produtos` e `movimentacao` com seus relacionamentos e constraints[cite: 17, 77]. Tabelas verificadas em.
+4.  **Verificar Credenciais:** Confirme se o usuário (`root`) e a senha (`senhasupersecreta`) definidos no arquivo `src/utils/conexaoDB.java` estão corretos para acessar o seu servidor MySQL. Ajuste se necessário. Senha verificada em.
+
+### Projeto Java
+
+1.  **JDK:** Verifique se o Java Development Kit (JDK), versão 17 ou compatível, está instalado (`java -version`).
+2.  **Driver JDBC:** Baixe o MySQL Connector/J (arquivo `.jar`, versão 9.4.0 utilizada) e coloque-o na pasta `lib` do projeto. Adicione-o como biblioteca no seu IDE.
+
+## Como Executar o Projeto (Linux) [cite: 82]
+
+Siga estas etapas no terminal Linux para compilar e executar a aplicação[cite: 83]:
+
+1.  **Navegue até a Raiz do Projeto:**
+    Use o comando `cd` para entrar no diretório principal do projeto (onde estão as pastas `src` e `lib`).
+
+    ```bash
+    cd caminho/para/ControleEstoque
+    ```
+
+2.  **Compile as Classes Java:**
+    Utilize o `javac`, incluindo o driver JDBC no classpath (`-cp`) e especificando o diretório de saída (`-d`).
+
+    ```bash
+    javac -cp "lib/mysql-connector-j-9.4.0.jar:." -d out src/*.java src/dao/*.java src/entidades/*.java src/utils/*.java
+    ```
+
+    _(Certifique-se que `mysql-connector-j-9.4.0.jar` é o nome exato do seu arquivo .jar na pasta `lib`. O `:` separa os diretórios no classpath do Linux)_
+
+3.  **Execute a Classe Principal:**
+    Utilize o `java`, incluindo a pasta `out` (onde estão os `.class`) e o driver JDBC no classpath.
+
+    ```bash
+    java -cp "lib/mysql-connector-j-9.4.0.jar:out:." Main
+    ```
+
+    _(Certifique-se que `mysql-connector-j-9.4.0.jar` é o nome exato do seu arquivo .jar)_
+
+4.  **Interaja:** O menu principal será exibido. Siga as instruções para testar as funcionalidades.
+
+## Vídeo Demonstrativo [cite: 80]
+
+Um vídeo demonstrando todas as funcionalidades do sistema está disponível no YouTube:
+
+[**COLE O LINK DO SEU VÍDEO NO YOUTUBE AQUI**]
