@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<architect-project version="1.0" appversion="1.0.9">
+ <project-name>DIAGRAMA_CONTROLE_ESTOQUE</project-name>
+ <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
+ <project-data-sources>
+  <data-source id="DS_MYSQL">
+   <property key="Logical" value="MySQL_Controle_Estoque" />
+  </data-source>
+ </project-data-sources>
+ <source-databases>
+ </source-databases>
+ <target-database id="mysql_db" dbcs-ref="DS_MYSQL">
+  <table id="TAB_PRODUTOS" populated="true" UUID="a1b2c3d4-e5f6-7890-1234-567890abcdef" name="produtos" objectType="TABLE" physicalName="produtos" >
+   <remarks>Tabela para armazenar informações dos produtos em estoque.</remarks>
+   <folder id="FOL_PROD_COLS" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL_PROD_ID" populated="true" UUID="b1c2d3e4-f5g6-7890-1234-abcdef123456" autoIncrement="true" autoIncrementSequenceName="" defaultValue="" name="id_produto" nullable="0" physicalName="id_produto" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks>Identificador único do produto (Auto Incremento)</remarks>
+    </column>
+    <column id="COL_PROD_NOME" populated="true" UUID="c1d2e3f4-g5h6-7890-1234-bcdef1234567" autoIncrement="false" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks>Nome do produto.</remarks>
+    </column>
+    <column id="COL_PROD_DESC" populated="true" UUID="d1e2f3g4-h5i6-7890-1234-cdef12345678" autoIncrement="false" defaultValue="" name="descricao" nullable="1" physicalName="descricao" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-1" userDefinedTypeUUID="PLACEHOLDER_TEXT_UUID" >
+     <remarks>Descrição detalhada do produto (TEXT type might need specific UUID or handling).</remarks>
+    </column>
+    <column id="COL_PROD_QTD" populated="true" UUID="e1f2g3h4-i5j6-7890-1234-def123456789" autoIncrement="false" defaultValue="" name="quantidade_estoque" nullable="0" physicalName="quantidade_estoque" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks>Quantidade atual do produto em estoque.</remarks>
+    </column>
+    <column id="COL_PROD_SRDEL" populated="true" UUID="f1g2h3i4-j5k6-7890-1234-ef1234567890" autoIncrement="false" defaultValue="'F'" name="sr_deleted" nullable="0" physicalName="sr_deleted" precision="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="PLACEHOLDER_CHAR_UUID" >
+     <remarks>Indicador de exclusão lógica (F=False, T=True).</remarks>
+    </column>
+   </folder>
+   <folder id="FOL_PROD_EXPKEYS" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+   </folder>
+   <folder id="FOL_PROD_IMPKEYS" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+   </folder>
+   <folder id="FOL_PROD_INDICES" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX_PROD_PK" populated="true" UUID="01234567-89ab-cdef-0123-456789abcdef" clustered="false" name="produtos_pk" physicalName="PRIMARY" primaryKeyIndex="true" unique="true" >
+     <index-column id="IDC_PROD_PK" populated="true" UUID="12345678-9abc-def0-1234-56789abcdef0" ascendingOrDescending="UNSPECIFIED" column-ref="COL_PROD_ID" name="id_produto" physicalName="id_produto" />
+    </index>
+    <index id="IDX_PROD_NOME" populated="true" UUID="23456789-abcd-ef01-2345-6789abcdef01" clustered="false" name="idx_nome_produto" physicalName="idx_nome_produto" primaryKeyIndex="false" unique="false" >
+     <index-column id="IDC_PROD_NOME" populated="true" UUID="3456789a-bcde-f012-3456-789abcdef012" ascendingOrDescending="UNSPECIFIED" column-ref="COL_PROD_NOME" name="nome" physicalName="nome" />
+    </index>
+   </folder>
+  </table>
+
+  <table id="TAB_MOVIMENTACAO" populated="true" UUID="a2b3c4d5-e6f7-8901-2345-67890abcdef1" name="movimentacao" objectType="TABLE" physicalName="movimentacao" >
+   <remarks>Tabela para registrar as movimentações de estoque (entradas e saídas).</remarks>
+   <folder id="FOL_MOV_COLS" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL_MOV_ID" populated="true" UUID="b2c3d4e5-f6g7-8901-2345-abcdef12345a" autoIncrement="true" autoIncrementSequenceName="" defaultValue="" name="id_movimentacao" nullable="0" physicalName="id_movimentacao" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks>Identificador único da movimentação (Auto Incremento)</remarks>
+    </column>
+    <column id="COL_MOV_IDPROD" populated="true" UUID="c2d3e4f5-g6h7-8901-2345-bcdef12345ab" autoIncrement="false" defaultValue="" name="id_produto" nullable="0" physicalName="id_produto" precision="0" primaryKeySeq="-1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks>Referência ao produto movimentado (Chave Estrangeira).</remarks>
+    </column>
+    <column id="COL_MOV_TIPO" populated="true" UUID="d2e3f4g5-h6i7-8901-2345-cdef12345abc" autoIncrement="false" defaultValue="" name="tipo_movimentacao" nullable="0" physicalName="tipo_movimentacao" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks>Tipo da movimentação (ex: ENTRADA, SAIDA).</remarks>
+    </column>
+    <column id="COL_MOV_QTD" populated="true" UUID="e2f3g4h5-i6j7-8901-2345-def12345abcd" autoIncrement="false" defaultValue="" name="quantidade" nullable="0" physicalName="quantidade" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks>Quantidade de itens movimentados.</remarks>
+    </column>
+    <column id="COL_MOV_DATA" populated="true" UUID="f2g3h4i5-j6k7-8901-2345-ef12345abcde" autoIncrement="false" defaultValue="" name="data_movimentacao" nullable="0" physicalName="data_movimentacao" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks>Data em que a movimentação ocorreu.</remarks>
+    </column>
+    <column id="COL_MOV_SRDEL" populated="true" UUID="03124576-ab9c-de0f-1234-f12345abcdef" autoIncrement="false" defaultValue="'F'" name="sr_deleted" nullable="0" physicalName="sr_deleted" precision="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="PLACEHOLDER_CHAR_UUID" >
+     <remarks>Indicador de exclusão lógica (F=False, T=True).</remarks>
+    </column>
+   </folder>
+   <folder id="FOL_MOV_EXPKEYS" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+   </folder>
+   <folder id="FOL_MOV_IMPKEYS" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+   </folder>
+   <folder id="FOL_MOV_INDICES" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX_MOV_PK" populated="true" UUID="13245687-9abc-def1-2345-6879abcdef12" clustered="false" name="movimentacao_pk" physicalName="PRIMARY" primaryKeyIndex="true" unique="true" >
+     <index-column id="IDC_MOV_PK" populated="true" UUID="24356798-abcd-ef10-2345-798abcdef123" ascendingOrDescending="UNSPECIFIED" column-ref="COL_MOV_ID" name="id_movimentacao" physicalName="id_movimentacao" />
+    </index>
+    <index id="IDX_MOV_FK_PROD" populated="true" UUID="35467809-bcde-f012-3456-809abcdef1234" clustered="false" name="fk_movimentacao_produto" physicalName="id_produto" primaryKeyIndex="false" unique="false" >
+     <index-column id="IDC_MOV_FK_PROD" populated="true" UUID="4657891a-cdef-0123-4567-91abcdef12345" ascendingOrDescending="UNSPECIFIED" column-ref="COL_MOV_IDPROD" name="id_produto" physicalName="id_produto" />
+    </index>
+   </folder>
+  </table>
+  <relationships>
+   <relationship id="REL_MOV_PROD" populated="true" UUID="5768902b-def0-1234-5678-02bcdef123456" deferrability="7" deleteRule="3" fk-table-ref="TAB_MOVIMENTACAO" fkCardinality="7" identifying="false" name="produtos_movimentacao_fk" physicalName="movimentacao_ibfk_1" pk-table-ref="TAB_PRODUTOS" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP_MOV_PROD" populated="true" UUID="6879013c-ef01-2345-6789-13cdef1234567" fk-column-ref="COL_MOV_IDPROD" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL_PROD_ID" />
+   </relationship>
+  </relationships>
+ </target-database>
+ <ddl-generator type="ca.sqlpower.architect.ddl.MySQLDDLGenerator" allow-connection="false"> </ddl-generator>
+ <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
+ <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
+ <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+  <table-pane table-ref="TAB_PRODUTOS" x="100" y="100" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB_MOVIMENTACAO" x="400" y="100" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL_MOV_PROD" pkConnection="0.5" fkConnection="0.5" rLineColor="0x3d3d3d" pkLabelText="" fkLabelText="" orientation="0"/>
+ </play-pen>
+ <critic-manager>
+ </critic-manager>
+ <profiles topNCount="10">
+ </profiles>
+ <olap>
+ </olap>
+ <olap-gui>
+ </olap-gui>
+</architect-project>
