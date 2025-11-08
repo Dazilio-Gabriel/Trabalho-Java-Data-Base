@@ -12,7 +12,6 @@ Este projeto consiste no desenvolvimento de uma aplicação de console em Java p
 ## 👥 Integrantes do Grupo
 
 - `Gabriel Dazilio Fanchiotti`
-- `Victor Castro`
 
 ## ✨ Funcionalidades Implementadas
 
@@ -141,4 +140,3 @@ Siga estas etapas no terminal Linux, **estando dentro do diretório raiz do proj
 ## Autores
 
 - [@Dazilio-Gabriel](https://github.com/Dazilio-Gabriel)
-- [@Victor-Castro]()
